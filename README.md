@@ -40,6 +40,29 @@ Cabot is written in Python and uses [Django](https://www.djangoproject.com/), [B
 
 Using Docker: Deploy in 5 minutes or less using [official quickstart guide at cabotapp.com](http://cabotapp.com/qs/quickstart.html). (See also https://hub.docker.com/r/cabotapp/cabot/)
 
+## Docker Image
+
+Docker images for Cabot are automatically built and published to GitHub Container Registry (GHCR) using GitHub Actions.
+
+**Image location:** `ghcr.io/rcarmo/cabot`
+
+**Available tags:**
+- `:main` - Latest build from the main branch
+- `:latest` - Latest stable release (published on version tags)
+- `:<version>` - Specific version tags (e.g., `:1.0.0`, `:1.0`, `:1`)
+
+**Pull the image:**
+```bash
+# Pull latest release
+docker pull ghcr.io/rcarmo/cabot:latest
+
+# Pull from main branch
+docker pull ghcr.io/rcarmo/cabot:main
+
+# Pull specific version
+docker pull ghcr.io/rcarmo/cabot:1.0.0
+```
+
 ## How it works
 
 Docs have moved to [cabotapp.com](http://cabotapp.com)
