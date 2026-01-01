@@ -1,0 +1,53 @@
+name: Snyk Security Scan
+
+on:
+  # Scan on pull requests
+  pull_request:
+    branches:
+      - master
+
+  # Scan on push to default branch
+  push:
+    branches:
+      - master
+
+  # Weekly scheduled scan
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9:00 AM UTC
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  snyk:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --severity-threshold=high --fail-on=all
+
+      - name: Monitor dependencies with Snyk (default branch only)
+        if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'schedule')
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor

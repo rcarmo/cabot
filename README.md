@@ -61,6 +61,40 @@ For those who want to contribute:
 *   [Help develop](http://cabotapp.com/dev/get-started.html)
 *   [Contribute code](http://cabotapp.com/dev/contribute-code.html)
 
+## Security and Dependency Management
+
+### Dependabot
+
+This repository uses Dependabot to automatically keep dependencies up to date. Dependabot checks for updates weekly (every Monday at 9:00 AM UTC) for:
+
+*   **Python dependencies** (`pip`): Monitors `requirements.txt`, `requirements-dev.txt`, `requirements-plugins.txt`, and other Python dependency files
+*   **Docker**: Monitors `Dockerfile` for base image updates
+*   **GitHub Actions**: Monitors workflow files for action updates
+
+Dependabot will automatically create pull requests for dependency updates, with a maximum of 10 open PRs at any time.
+
+### Snyk Security Scanning
+
+This repository uses Snyk to scan for security vulnerabilities in dependencies. The Snyk workflow runs:
+
+*   On every pull request
+*   On push to the `master` branch
+*   Weekly (every Monday at 9:00 AM UTC)
+
+#### Setting up Snyk
+
+To enable Snyk scanning, you need to add a `SNYK_TOKEN` secret to your GitHub repository:
+
+1.  Sign up for a free account at [snyk.io](https://snyk.io/)
+2.  Get your API token from your [Snyk account settings](https://app.snyk.io/account)
+3.  In your GitHub repository, go to **Settings** → **Secrets and variables** → **Actions**
+4.  Click **New repository secret**
+5.  Name: `SNYK_TOKEN`
+6.  Value: Paste your Snyk API token
+7.  Click **Add secret**
+
+The workflow will fail if vulnerabilities with high or critical severity are found, helping maintain security standards.
+
 ## FAQ
 
 ### Why "Cabot"?
